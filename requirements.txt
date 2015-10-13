@@ -3,3 +3,6 @@ pygeocoder
 urllib3
 arrow
 pyyaml
+simplejson
+twilio
+gunicorn
