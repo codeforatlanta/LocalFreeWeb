@@ -2,7 +2,7 @@ LocalFreeWeb
 ===========
 
 A resource directory of sites that provide free access to internet enabled
-computers in San Francisco.
+computers in Atlanta.
 
 PLEASE NOTE:
 This repository only includes a Flask app, addlocation.py that is executed via
@@ -18,16 +18,5 @@ https://github.com/sfbrigade/localfreeweb.org
 
 In addition, the following resources have been used:
 
-SFMTA transit data that includes a list of all bus stops and their meta data
-ie; address, ID, Geocode. This is updated roughly every three months.
-Here is the website to access it:
-http://www.sfmta.com/about-sfmta/reports/gtfs-transit-data
-
-EveryOneOn.org has a json file that can be accessed of their locations
-in and around SF: 
-http://api.everyoneon.org/json.php?zip=94109&distance=20&limit=500
-
-SF's public libraries: http://sfpl.org/pdf/libraries/sfpl421.pdf
-
-Link-SF: http://www.link-sf.com/#query?categories=technology&sort=near
-
+MARTA Transit data, which is updated quarterly.
+http://itsmarta.com/developers/data-sources/general-transit-feed-specification-gtfs.aspx
