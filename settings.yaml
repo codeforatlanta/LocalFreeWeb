@@ -1,4 +1,5 @@
-cartodb_url: http://localfreeweb.cartodb.com
+cartodb_url: http://midjtxc.cartodb.com
 api_path: /api/v2/sql
-table_path: /tables/freeweb
+table_name: localfreewebatl
 local_city_state: "Atlanta, GA"
+timezone: US/Eastern

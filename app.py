@@ -8,14 +8,16 @@ import twilio.twiml
 import arrow
 import re
 import os
+import yaml
 
+config = yaml.load(file('settings.yaml', 'r')) 
 
 #Global Variables
 apikey = os.environ.get('CARTO_DB_API_KEY')
 #cartoDB variables
-url = 'http://localfreeweb.cartodb.com/api/v2/sql'
-SELECT_url = 'http://localfreeweb.cartodb.com/api/v2/sql?q=SELECT '
-day = 'day' + str(arrow.now('US/Pacific').weekday())
+url = config['cartodb_url'] + config['api_path']
+SELECT_url = url+'?q=SELECT '
+day = 'day' + str(arrow.now(config['timezone']).weekday())
 
 error_message = "We apologize for the inconvenience, we are unable to "
 error_message += "determine the closest 'free internet'. "
@@ -23,7 +25,10 @@ error_message += "Please try another Stop ID. Thank you!"
 
 app = Flask(__name__)
 
-@app.route("/",methods=["GET","POST"])
+app.secret_key = "9801a236-256f-4152-b43d-15f0d1104acb"
+
+
+@app.route("/message",methods=["GET","POST"])
   
 def receive_text():
     """Performs main functionality of app ie;
@@ -148,7 +153,7 @@ def get_closest_internet(stop_gps_resp_dict):
     free_net_url = SELECT_url + 'bizname, address, ' + day + ', phone, '
     free_net_url += 'ST_Distance(the_geom::geography, ST_PointFromText('
     free_net_url += '\'POINT('+ geo_long + ' ' + geo_lat + ')\', 4326)'
-    free_net_url += '::geography) AS distance FROM freeweb ORDER BY distance '
+    free_net_url += '::geography) AS distance FROM ' + config['table_name'] + ' ORDER BY distance '
     free_net_url += 'ASC LIMIT 3'
     response = urllib.urlopen(free_net_url)
     for line in response:
@@ -174,7 +179,9 @@ def generate_response_text(internet_resp_dict):
     results = results.replace("open today:CLOSED", "closed today")
     return generate_text_message(results[:-3])
 
+# Include addlocation.py
+from addlocation import module
+app.register_blueprint(module, url_prefix='/')
 
 if __name__ == "__main__":
     app.run(debug=True)
-

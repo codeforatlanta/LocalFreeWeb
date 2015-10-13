@@ -14,10 +14,8 @@ import arrow
 import os
 import yaml
 
+module = flask.Blueprint('addlocation', __name__)
 
-app = flask.Flask(__name__)
-
-app.secret_key = "bacon"
 
 config = yaml.load(file('settings.yaml', 'r')) 
 
@@ -99,14 +97,14 @@ class View(flask.views.MethodView):
                                       org_type, phone, training_types, website)
             make_request(insert)
             result = "New location added to: "
-            result += config['cartodb_url'] + config['table_path']
+            result += config['cartodb_url'] + '/tables/' + config['table_name']
         else:
             result = "Invalid Address"
         flask.flash(result)
         return self.get()
         
         
-app.add_url_rule('/', view_func=View.as_view('main'), methods=['GET', 'POST'])
+module.add_url_rule('/', view_func=View.as_view('main'), methods=['GET', 'POST'])
 
 #Helper functions
 def build_sql_insert(address, line_two, bizname, hrs, org_type, phone,
@@ -120,7 +118,7 @@ def build_sql_insert(address, line_two, bizname, hrs, org_type, phone,
                 line_two, bizname, org_type, phone, training_types, website
     Out arg:    insert
     """
-    insert = 'INSERT INTO freeweb (address, bizname, '
+    insert = 'INSERT INTO '+config['table_name']+' (address, bizname, '
     insert += 'day0, day1, day2, day3, day4, day5, day6, '
     insert += 'org_type, phone, training_types, website, the_geom) '
     insert += 'VALUES (\'' + trim_address(address, line_two) + '\', '
@@ -179,10 +177,3 @@ def make_request(insert):
         print e.msg
         print e.headers
         print e.fp.read()
-    
-
-#Turn on debug mode ie; changes are immediately reflected 
-app.debug = True
-
-app.run()
-

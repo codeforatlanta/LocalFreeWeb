@@ -20,3 +20,20 @@ In addition, the following resources have been used:
 
 MARTA Transit data, which is updated quarterly.
 http://itsmarta.com/developers/data-sources/general-transit-feed-specification-gtfs.aspx
+
+cartodb columns:
+
+address
+bizname
+day0
+day1
+day2
+day3
+day4
+day5
+day6
+org_type
+phone
+training_types
+website
+the_geom
