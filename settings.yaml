@@ -1,5 +1,5 @@
 cartodb_url: http://localfreeweb.cartodb.com
 api_path: /api/v2/sql
 table_path: /tables/freeweb
-local_city_state: "San Francisco, CA"
+local_city_state: "Atlanta, GA"
 
